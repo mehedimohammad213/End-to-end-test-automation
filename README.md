@@ -52,6 +52,23 @@ npm run test:ui
 npm run report
 ```
 
+## Docker
+
+```bash
+cp .env.example .env   # configure credentials first
+
+# Build image
+npm run docker:build
+
+# Run all tests in container
+npm run docker:test
+
+# Chromium only
+npm run docker:test:chromium
+```
+
+Reports are written to `playwright-report/`, `allure-results/`, and `test-results/` on the host via volume mounts.
+
 ## Environment Variables
 
 | Variable | Description |
@@ -74,9 +91,13 @@ tests/          # Test specifications
 
 ## CI/CD
 
-GitHub Actions workflow runs on push/PR to `main`/`master`. Configure repository secrets:
+GitHub Actions (`.github/workflows/playwright.yml`) runs on push/PR to `main`/`master` and on manual dispatch. Tests execute inside Docker for a reproducible environment, with a browser matrix (Chromium, Firefox, WebKit).
+
+Configure repository secrets:
 
 - `USER_EMAIL`
 - `USER_PASSWORD`
+
+Artifacts uploaded on each run: Playwright HTML report, Allure results, merged Allure report, and test traces on failure.
 
 # End-to-end-test-automation

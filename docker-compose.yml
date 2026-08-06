@@ -1,0 +1,11 @@
+services:
+  tests:
+    build: .
+    env_file:
+      - .env
+    environment:
+      CI: "true"
+    volumes:
+      - ./test-results:/app/test-results
+      - ./playwright-report:/app/playwright-report
+      - ./allure-results:/app/allure-results
