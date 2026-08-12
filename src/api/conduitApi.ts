@@ -23,7 +23,7 @@ export class ConduitApi {
   private context: APIRequestContext | null = null;
   private token: string | null = null;
 
-  constructor(apiUrl = process.env.API_URL ?? 'https://conduit-api.bondaracademy.com/api') {
+  constructor(apiUrl = process.env.API_URL || 'https://conduit-api.bondaracademy.com/api') {
     this.apiUrl = apiUrl.replace(/\/$/, '');
   }
 
@@ -62,17 +62,25 @@ export class ConduitApi {
   async login(email?: string, password?: string): Promise<string> {
     if (!this.context) await this.init();
 
+    const targetEmail = email || process.env.USER_EMAIL || 'test1212@gmail.com';
+    const targetPassword = password || process.env.USER_PASSWORD || '12345678';
+
     const response = await this.context!.post(this.endpoint('users/login'), {
       data: {
         user: {
-          email: email ?? process.env.USER_EMAIL,
-          password: password ?? process.env.USER_PASSWORD,
+          email: targetEmail,
+          password: targetPassword,
         },
       },
     });
 
     if (!response.ok()) {
-      throw new Error(`Login failed: ${response.status()} ${await response.text()}`);
+      const username = targetEmail.split('@')[0].replace(/[^a-zA-Z0-9]/g, '');
+      try {
+        return await this.register(username, targetEmail, targetPassword);
+      } catch {
+        throw new Error(`Login failed: ${response.status()} ${await response.text()}`);
+      }
     }
 
     const body = await response.json();

@@ -38,7 +38,7 @@ test.describe('Delete Article', () => {
   });
 
   test('should reject unauthenticated delete requests @negative', async () => {
-    const apiUrl = process.env.API_URL ?? 'https://conduit-api.bondaracademy.com/api';
+    const apiUrl = process.env.API_URL || 'https://conduit-api.bondaracademy.com/api';
     const ctx = await request.newContext();
 
     const response = await ctx.delete(`${apiUrl}/articles/${articleSlug}`);

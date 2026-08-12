@@ -23,7 +23,7 @@ AfterAll(async function () {
 Before(async function (this: CustomWorld) {
   const authFile = path.join('.auth', 'user.json');
   const storageState = fs.existsSync(authFile) ? authFile : undefined;
-  const baseURL = process.env.BASE_URL ?? 'https://conduit.bondaracademy.com';
+  const baseURL = process.env.BASE_URL || 'https://conduit.bondaracademy.com';
 
   this.browser = browser;
   this.context = await browser.newContext({ storageState, baseURL });
