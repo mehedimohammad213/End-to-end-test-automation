@@ -1,7 +1,7 @@
 import { test as setup, expect } from '@playwright/test';
 import { LoginPage } from '../src/pages/loginPage';
 import { ConduitApi } from '../src/api/conduitApi';
-import { faker } from '@faker-js/faker';
+import { faker } from 'fillup-fake-data';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -27,7 +27,7 @@ setup('authenticate user', async ({ page }) => {
     const api = new ConduitApi();
     await api.init();
 
-    const uniqueId = faker.string.alphanumeric(8).toLowerCase();
+    const uniqueId = faker.internet.uuid().replace(/-/g, '').slice(0, 8).toLowerCase();
     const newEmail = `qatest${uniqueId}@test.com`;
     const newUsername = `qatest${uniqueId}`;
     const newPassword = 'Test123456!';

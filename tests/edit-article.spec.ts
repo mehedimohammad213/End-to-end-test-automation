@@ -3,7 +3,7 @@ import { EditorPage } from '../src/pages/editorPage';
 import { ArticlePage } from '../src/pages/articlePage';
 import { generateArticle } from '../src/data/testDataGenerator';
 import { ConduitApi } from '../src/api/conduitApi';
-import { faker } from '@faker-js/faker';
+import { faker } from 'fillup-fake-data';
 
 test.describe('Edit Article', () => {
   let api: ConduitApi;
@@ -25,8 +25,8 @@ test.describe('Edit Article', () => {
   });
 
   test('should edit an existing article successfully @positive', async ({ page }) => {
-    const updatedTitle = `Updated ${faker.string.alphanumeric(8)}`;
-    const updatedBody = faker.lorem.paragraphs(1);
+    const updatedTitle = `Updated ${faker.internet.uuid().replace(/-/g, '').slice(0, 8)}`;
+    const updatedBody = faker.text.loremParagraph(1);
 
     const articlePage = new ArticlePage(page);
     const editorPage = new EditorPage(page);

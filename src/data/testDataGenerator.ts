@@ -1,14 +1,14 @@
-import { faker } from '@faker-js/faker';
+import { faker } from 'fillup-fake-data';
 import { ArticlePayload } from '../api/conduitApi';
 
 export function generateArticle(overrides: Partial<ArticlePayload> = {}): ArticlePayload {
-  const uniqueId = faker.string.alphanumeric(8).toLowerCase();
+  const uniqueId = faker.internet.uuid().replace(/-/g, '').slice(0, 8).toLowerCase();
 
   return {
     title: overrides.title ?? `Test Article ${uniqueId}`,
-    description: overrides.description ?? faker.lorem.sentence(),
-    body: overrides.body ?? faker.lorem.paragraphs(2),
-    tagList: overrides.tagList ?? [faker.word.noun(), `qa-${uniqueId}`],
+    description: overrides.description ?? faker.text.loremSentence(),
+    body: overrides.body ?? faker.text.loremParagraph(2),
+    tagList: overrides.tagList ?? [faker.text.word(), `qa-${uniqueId}`],
   };
 }
 
@@ -25,11 +25,11 @@ export function generateUserBio(): string {
 }
 
 export function generateInvalidEmail(): string {
-  return faker.string.alphanumeric(10) + '@invalid';
+  return faker.internet.uuid().replace(/-/g, '').slice(0, 10) + '@invalid';
 }
 
 export function generateNonExistentTag(): string {
-  return `nonexistent-tag-${faker.string.alphanumeric(12).toLowerCase()}`;
+  return `nonexistent-tag-${faker.internet.uuid().replace(/-/g, '').slice(0, 12).toLowerCase()}`;
 }
 
 export function slugify(title: string): string {

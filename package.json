@@ -19,10 +19,12 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@faker-js/faker": "^10.5.0",
     "@playwright/test": "^1.62.1",
     "allure-playwright": "^3.10.2",
     "dotenv": "^17.4.2",
     "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "fillup-fake-data": "^1.0.1"
   }
 }
