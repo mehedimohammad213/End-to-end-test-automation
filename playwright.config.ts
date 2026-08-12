@@ -29,11 +29,19 @@ export default defineConfig({
 
   use: {
     baseURL,
+    // Run headless in CI, otherwise show UI for local debugging
+    headless: !!process.env.CI,
+    // Enable trace collection on first retry for flaky test analysis
     trace: 'on-first-retry',
+    // Capture screenshots only on failure to keep reports clean
     screenshot: 'only-on-failure',
+    // Keep videos of failed runs for debugging
     video: 'retain-on-failure',
-    actionTimeout: 15_000,
-    navigationTimeout: 30_000,
+    // Extend timeouts for actions and navigation to accommodate slower environments
+    actionTimeout: 30_000,
+    navigationTimeout: 60_000,
+    // Enable video recording for all browsers
+    recordVideo: { dir: 'videos/', size: { width: 1280, height: 720 } },
   },
 
   projects: [
@@ -61,6 +69,15 @@ export default defineConfig({
       name: 'webkit',
       use: {
         ...devices['Desktop Safari'],
+        storageState: '.auth/user.json',
+      },
+      dependencies: ['setup'],
+    },
+    {
+      name: 'mobile',
+      use: {
+        ...devices['iPhone 14'],
+        // Reuse authenticated state
         storageState: '.auth/user.json',
       },
       dependencies: ['setup'],

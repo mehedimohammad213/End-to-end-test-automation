@@ -8,17 +8,25 @@
     "test:ui": "playwright test --ui",
     "test:chromium": "playwright test --project=chromium",
     "test:cucumber": "tsx ./node_modules/@cucumber/cucumber/bin/cucumber.js",
+    "test:ci": "CI=true playwright test",
+    "lint": "eslint . --ext .ts,.js",
+    "format": "prettier --write .",
     "report": "playwright show-report",
     "allure:generate": "allure generate allure-results --clean -o allure-report",
     "allure:open": "allure open allure-report",
     "docker:build": "docker compose build",
     "docker:test": "docker compose run --rm tests",
+    "docker:test:ci": "docker compose run --rm tests npx playwright test --project=chromium",
     "docker:test:chromium": "docker compose run --rm tests npx playwright test --project=chromium"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["playwright","cucumber","e2e","testing"],
+  "author": "Mehedi Mohammad",
   "license": "ISC",
-  "description": "",
+  "description": "End-to-end test automation suite with Playwright and Cucumber for the Conduit demo application.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mehedimohammad213/End-to-end-test-automation.git"
+  },
   "devDependencies": {
     "@cucumber/cucumber": "^10.9.0",
     "@playwright/test": "^1.62.1",
