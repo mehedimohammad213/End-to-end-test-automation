@@ -7,3 +7,4 @@ allure-report/
 .auth/
 .env
 *.log
+reports/
